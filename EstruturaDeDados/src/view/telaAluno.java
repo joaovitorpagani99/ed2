@@ -23,14 +23,20 @@ public class telaAluno extends javax.swing.JFrame {
     DefaultTableModel dado;
     ListaMateria listaMateria = new ListaMateria();
 
-    public telaAluno() {
-    }
+    public telaAluno() {}
 
     public telaAluno(telaMateria materia) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.dado = (DefaultTableModel) table.getModel();
         this.listaMateria = materia.getLista();
+    }
+    d
+    public void limparCampo() {
+        txtIdade.setText("");
+        txtMAtricula.setText("");
+        txtNomeAluno.setText("");
+        txtNota.setText("");
     }
 
     public void carregarTabela() {
@@ -125,6 +131,9 @@ public class telaAluno extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tableMouseClicked(evt);
             }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                tableMouseReleased(evt);
+            }
         });
         table.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -159,10 +168,10 @@ public class telaAluno extends javax.swing.JFrame {
         jLabel5.setText("Nota");
 
         cb.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 cbAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
@@ -255,7 +264,7 @@ public class telaAluno extends javax.swing.JFrame {
             String materia = cb.getSelectedItem().toString();
             Materia mat = listaMateria.buscar(materia);
             String nota = txtNota.getText();
-           
+
             Aluno aluno = new Aluno();
             aluno.setNome(nome);
             aluno.setIdade(idade);
@@ -299,15 +308,35 @@ public class telaAluno extends javax.swing.JFrame {
     }//GEN-LAST:event_tableMouseClicked
 
     private void tableKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tableKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tableKeyPressed
-
-    private void tableKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tableKeyReleased
         if (table.getSelectedRow() != -1) {
             txtNomeAluno.setText(table.getValueAt(table.getSelectedRow(), 0).toString());
             txtIdade.setText(table.getValueAt(table.getSelectedRow(), 1).toString());
             txtMAtricula.setText(table.getValueAt(table.getSelectedRow(), 2).toString());
+            cb.setSelectedItem(table.getValueAt(table.getSelectedRow(), 3));
+            txtNota.setText(table.getValueAt(table.getSelectedRow(), 4).toString());
+        } else {
+            txtIdade.setText("");
+            txtMAtricula.setText("");
+            txtNota.setText("");
+            txtIdade.setText("");
         }
+
+    }//GEN-LAST:event_tableKeyPressed
+
+    private void tableKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tableKeyReleased
+
+        if (table.getSelectedRow() != -1) {
+            txtNomeAluno.setText(table.getValueAt(table.getSelectedRow(), 0).toString());
+            txtIdade.setText(table.getValueAt(table.getSelectedRow(), 1).toString());
+            txtMAtricula.setText(table.getValueAt(table.getSelectedRow(), 2).toString());
+            cb.setSelectedItem(table.getValueAt(table.getSelectedRow(), 3));
+            txtNota.setText(table.getValueAt(table.getSelectedRow(), 4).toString());
+        } else {
+            txtIdade.setText("");
+            txtMAtricula.setText("");
+            txtNota.setText("");
+            txtIdade.setText("");
+    }
     }//GEN-LAST:event_tableKeyReleased
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
@@ -323,6 +352,7 @@ public class telaAluno extends javax.swing.JFrame {
         try {
             lista.buscar(txtMAtricula.getText()).setIdade(Integer.parseInt(txtIdade.getText()));
             lista.buscar(txtMAtricula.getText()).setNome(txtNomeAluno.getText());
+            lista.buscar(txtMAtricula.getText()).setNota(txtNota.getText());
             lista.exibirLista();
             carregarTabela();
         } catch (NullPointerException e) {
@@ -338,9 +368,11 @@ public class telaAluno extends javax.swing.JFrame {
             lista.retirarMeio(linha);
             DefaultTableModel val = (DefaultTableModel) table.getModel();
             val.removeRow(linha);
+            limparCampo();
         }
         lista.exibirLista();
     }//GEN-LAST:event_btnDeletarActionPerformed
+
 
     private void cbAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_cbAncestorAdded
         cb.removeAllItems();
@@ -350,6 +382,21 @@ public class telaAluno extends javax.swing.JFrame {
             atual = atual.getProximo();
         }
     }//GEN-LAST:event_cbAncestorAdded
+
+    private void tableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseReleased
+        if (table.getSelectedRow() != -1) {
+            txtNomeAluno.setText(table.getValueAt(table.getSelectedRow(), 0).toString());
+            txtIdade.setText(table.getValueAt(table.getSelectedRow(), 1).toString());
+            txtMAtricula.setText(table.getValueAt(table.getSelectedRow(), 2).toString());
+            cb.setSelectedItem(table.getValueAt(table.getSelectedRow(), 3));
+            txtNota.setText(table.getValueAt(table.getSelectedRow(), 4).toString());
+        } else {
+            txtIdade.setText("");
+            txtMAtricula.setText("");
+            txtNota.setText("");
+            txtIdade.setText("");
+        }
+    }//GEN-LAST:event_tableMouseReleased
 
     /**
      * @param args the command line arguments
@@ -367,23 +414,27 @@ public class telaAluno extends javax.swing.JFrame {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
 
-                }
+}
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(telaAluno.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(telaAluno.class  
 
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(telaAluno.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(telaAluno.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+} catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(telaAluno.class  
 
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(telaAluno.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
+} catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(telaAluno.class  
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
+} catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(telaAluno.class  
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
