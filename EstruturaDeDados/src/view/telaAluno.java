@@ -8,6 +8,7 @@ import estruturadedados.ListaAluno;
 import estruturadedados.ListaMateria;
 import estruturadedados.No;
 import estruturadedados.NoMateria;
+import estruturadedados.ordenacaoQuick.QuickSort;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Aluno;
@@ -22,8 +23,10 @@ public class telaAluno extends javax.swing.JFrame {
     ListaAluno lista = new ListaAluno();
     DefaultTableModel dado;
     ListaMateria listaMateria = new ListaMateria();
+    QuickSort quickSort = new QuickSort();
 
-    public telaAluno() {}
+    public telaAluno() {
+    }
 
     public telaAluno(telaMateria materia) {
         initComponents();
@@ -31,7 +34,7 @@ public class telaAluno extends javax.swing.JFrame {
         this.dado = (DefaultTableModel) table.getModel();
         this.listaMateria = materia.getLista();
     }
-    d
+
     public void limparCampo() {
         txtIdade.setText("");
         txtMAtricula.setText("");
@@ -40,6 +43,24 @@ public class telaAluno extends javax.swing.JFrame {
     }
 
     public void carregarTabela() {
+
+        dado.setNumRows(0);
+        No atual = lista.getInicio();
+        while (atual != null) {
+            Aluno aluno = atual.getAluno();
+            dado.addRow(new Object[]{
+                aluno.getNome(),
+                aluno.getIdade(),
+                aluno.getMatricula(),
+                aluno.getMateria().getMateria(),
+                aluno.getNota()
+            });
+            atual = atual.getProximo();
+        }
+    }
+
+    public void carregarTabelaPorNome() {
+        quickSort.quicksortPorNome(lista);
         dado.setNumRows(0);
         No atual = lista.getInicio();
         while (atual != null) {
@@ -84,6 +105,9 @@ public class telaAluno extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         cb = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
+        btnOrdenar = new javax.swing.JButton();
+        btnIdade = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         jTextField1.setText("jTextField1");
 
@@ -179,6 +203,27 @@ public class telaAluno extends javax.swing.JFrame {
 
         jLabel6.setText("Materia");
 
+        btnOrdenar.setText("ordenar por nome");
+        btnOrdenar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOrdenarActionPerformed(evt);
+            }
+        });
+
+        btnIdade.setText("ordenar por idade");
+        btnIdade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIdadeActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("ordenar por desempenho");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -206,7 +251,13 @@ public class telaAluno extends javax.swing.JFrame {
                                     .addComponent(txtIdade, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
                                     .addComponent(txtNota)
                                     .addComponent(cb, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnOrdenar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnIdade, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -248,7 +299,14 @@ public class telaAluno extends javax.swing.JFrame {
                     .addComponent(btnAtualizar)
                     .addComponent(btnDeletar))
                 .addGap(28, 28, 28)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnOrdenar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnIdade, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(19, 19, 19))
         );
 
@@ -263,7 +321,7 @@ public class telaAluno extends javax.swing.JFrame {
             String matricula = txtMAtricula.getText();
             String materia = cb.getSelectedItem().toString();
             Materia mat = listaMateria.buscar(materia);
-            String nota = txtNota.getText();
+            double nota = Double.parseDouble(txtNota.getText());
 
             Aluno aluno = new Aluno();
             aluno.setNome(nome);
@@ -280,7 +338,6 @@ public class telaAluno extends javax.swing.JFrame {
             txtNota.setText("");
 
             lista.exibirLista();
-
             carregarTabela();
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "idade invalida");
@@ -336,7 +393,7 @@ public class telaAluno extends javax.swing.JFrame {
             txtMAtricula.setText("");
             txtNota.setText("");
             txtIdade.setText("");
-    }
+        }
     }//GEN-LAST:event_tableKeyReleased
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
@@ -352,7 +409,7 @@ public class telaAluno extends javax.swing.JFrame {
         try {
             lista.buscar(txtMAtricula.getText()).setIdade(Integer.parseInt(txtIdade.getText()));
             lista.buscar(txtMAtricula.getText()).setNome(txtNomeAluno.getText());
-            lista.buscar(txtMAtricula.getText()).setNota(txtNota.getText());
+            lista.buscar(txtMAtricula.getText()).setNota(Double.parseDouble(txtNota.getText()));
             lista.exibirLista();
             carregarTabela();
         } catch (NullPointerException e) {
@@ -398,6 +455,21 @@ public class telaAluno extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tableMouseReleased
 
+    private void btnOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenarActionPerformed
+        quickSort.quicksortPorNome(lista);
+        carregarTabela();
+    }//GEN-LAST:event_btnOrdenarActionPerformed
+
+    private void btnIdadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIdadeActionPerformed
+        quickSort.quicksortPorIdade(lista);
+        carregarTabela();
+    }//GEN-LAST:event_btnIdadeActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        quickSort.quicksortPorDesempenho(lista);
+        carregarTabela();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -414,27 +486,23 @@ public class telaAluno extends javax.swing.JFrame {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
 
-}
+                }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(telaAluno.class  
+            java.util.logging.Logger.getLogger(telaAluno.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(telaAluno.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-} catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(telaAluno.class  
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(telaAluno.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
-} catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(telaAluno.class  
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
-} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(telaAluno.class  
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(telaAluno.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -449,8 +517,11 @@ public class telaAluno extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtualizar;
     private javax.swing.JButton btnDeletar;
+    private javax.swing.JButton btnIdade;
     private javax.swing.JButton btnInserir;
+    private javax.swing.JButton btnOrdenar;
     private javax.swing.JComboBox<String> cb;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -6,13 +6,13 @@ public class Aluno {
     private int idade;
     private String matricula;
     private Materia materia;
-    private String nota;
+    private Double nota;
 
     public Aluno() {
         super();
     }
 
-    public Aluno(String nome, int idade, String matricula, Materia materia, String nota) {
+    public Aluno(String nome, int idade, String matricula, Materia materia, Double nota) {
         this.nome = nome;
         this.idade = idade;
         this.matricula = matricula;
@@ -52,11 +52,11 @@ public class Aluno {
         this.materia = materia;
     }
 
-    public String getNota() {
+    public Double getNota() {
         return nota;
     }
 
-    public void setNota(String nota) {
+    public void setNota(Double nota) {
         this.nota = nota;
     }
 

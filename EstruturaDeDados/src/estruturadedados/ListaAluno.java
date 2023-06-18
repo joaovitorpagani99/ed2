@@ -1,5 +1,6 @@
 package estruturadedados;
 
+import java.util.List;
 import model.Aluno;
 
 public class ListaAluno {
@@ -175,8 +176,8 @@ public class ListaAluno {
         }
         return null;
     }
-    
-     public Aluno buscarNome(String nome) {
+
+    public Aluno buscarNome(String nome) {
         No atual = inicio;
         while (atual != null) {
             if (atual.aluno.getNome().equals(nome)) {
@@ -187,4 +188,7 @@ public class ListaAluno {
         }
         return null;
     }
-}
+
+    
+
+ }

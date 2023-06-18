@@ -1,5 +1,6 @@
 package estruturadedados;
 
+import model.Aluno;
 import model.Materia;
 
 public class ListaMateria {
@@ -166,8 +167,6 @@ public class ListaMateria {
                 atual = atual.getProximo();
         }
     }
-    
-    
 
     public int getTamanho() {
         return tamanho;
@@ -189,8 +188,7 @@ public class ListaMateria {
         this.fim = fim;
     }
 
-    public Object buscar(Materia materia) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+     
+    // Outros métodos da lista omitidos para simplicidade
 
 }

@@ -5,7 +5,6 @@ import model.Materia;
 public class NoMateria {
 
 	private Materia materia;
-        
 	private NoMateria proximo;
 	private NoMateria anterior;
 	
@@ -31,8 +30,9 @@ public class NoMateria {
 		this.anterior = anterior;
 	}
 
-    void setMateria(String materia) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    @Override
+    public String toString() {
+        return "NoMateria{" + "materia=" + materia + ", proximo=" + proximo + ", anterior=" + anterior + '}';
     }
 
 }
