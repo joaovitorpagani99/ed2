@@ -322,14 +322,14 @@ public class telaAluno extends javax.swing.JFrame {
             String materia = cb.getSelectedItem().toString();
             Materia mat = listaMateria.buscar(materia);
             double nota = Double.parseDouble(txtNota.getText());
-
+            listaMateria.buscar(materia).setnAluno(1);
             Aluno aluno = new Aluno();
             aluno.setNome(nome);
             aluno.setIdade(idade);
             aluno.setMatricula(matricula);
             aluno.setMateria(mat);
             aluno.setNota(nota);
-
+            
             lista.inserirInicio(aluno);
 
             txtNomeAluno.setText("");
