@@ -4,6 +4,7 @@ public class Materia {
 
     private String materia;
     private int nAluno;
+    
 
     public Materia() {
     }
@@ -28,11 +29,13 @@ public class Materia {
     public void setnAluno(int nAluno) {
         this.nAluno = getnAluno() + nAluno;
     }
+    
+    
 
     @Override
     public String toString() {
         return "Materia{" + "materia=" + materia + ", nAluno=" + nAluno + '}';
     }
-    
+
     
 }

@@ -6,6 +6,7 @@ package view;
 
 import estruturadedados.ListaMateria;
 import estruturadedados.NoMateria;
+import estruturadedados.ordenacaoQuick.QuickSortMateria;
 import javax.swing.table.DefaultTableModel;
 import model.Materia;
 
@@ -14,7 +15,8 @@ import model.Materia;
  * @author joaov
  */
 public class telaMateria extends javax.swing.JFrame {
-
+    
+    QuickSortMateria quick = new QuickSortMateria();
     ListaMateria lista = new ListaMateria();
     DefaultTableModel tab;
     private static int counter = 0;
@@ -67,6 +69,7 @@ public class telaMateria extends javax.swing.JFrame {
         txtNomeMateria = new javax.swing.JTextField();
         btnDel = new javax.swing.JButton();
         btnAt = new javax.swing.JButton();
+        btnIOrdenar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -125,6 +128,13 @@ public class telaMateria extends javax.swing.JFrame {
             }
         });
 
+        btnIOrdenar.setText("Ordenar Por quuantidade");
+        btnIOrdenar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIOrdenarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -144,8 +154,10 @@ public class telaMateria extends javax.swing.JFrame {
                                 .addComponent(btnAt, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(60, 60, 60)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 117, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnIOrdenar)))
+                .addGap(0, 12, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -160,7 +172,11 @@ public class telaMateria extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnAt)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(53, 53, 53)
+                        .addComponent(btnIOrdenar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(22, 22, 22))
         );
 
@@ -183,6 +199,7 @@ public class telaMateria extends javax.swing.JFrame {
 
         tab.setRowCount(0);
         lista.exibirLista();
+        quick.quicksortPorNome(lista);
         carregarTabela();
         txtNomeMateria.setText("");
     }//GEN-LAST:event_btnInserirActionPerformed
@@ -232,6 +249,11 @@ public class telaMateria extends javax.swing.JFrame {
         lista.exibirLista();
     }//GEN-LAST:event_btnAtActionPerformed
 
+    private void btnIOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIOrdenarActionPerformed
+        quick.sort(lista);
+        carregarTabela();
+    }//GEN-LAST:event_btnIOrdenarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -272,6 +294,7 @@ public class telaMateria extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAt;
     private javax.swing.JButton btnDel;
+    private javax.swing.JButton btnIOrdenar;
     private javax.swing.JButton btnInserir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;

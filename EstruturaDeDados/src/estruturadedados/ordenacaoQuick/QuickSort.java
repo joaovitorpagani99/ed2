@@ -6,7 +6,6 @@ package estruturadedados.ordenacaoQuick;
 
 import estruturadedados.ListaAluno;
 import estruturadedados.No;
-import javax.swing.JOptionPane;
 import model.Aluno;
 
 /**
