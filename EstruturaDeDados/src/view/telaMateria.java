@@ -7,6 +7,7 @@ package view;
 import estruturadedados.ListaMateria;
 import estruturadedados.NoMateria;
 import estruturadedados.ordenacaoQuick.QuickSortMateria;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Materia;
 
@@ -15,13 +16,10 @@ import model.Materia;
  * @author joaov
  */
 public class telaMateria extends javax.swing.JFrame {
-    
+
     QuickSortMateria quick = new QuickSortMateria();
     ListaMateria lista = new ListaMateria();
     DefaultTableModel tab;
-    private static int counter = 0;
-
-  
 
     public telaMateria() {
         initComponents();
@@ -36,8 +34,6 @@ public class telaMateria extends javax.swing.JFrame {
     public void setLista(ListaMateria lista) {
         this.lista = lista;
     }
-    
-    
 
     public void carregarTabela() {
         tab.setNumRows(0);
@@ -51,6 +47,10 @@ public class telaMateria extends javax.swing.JFrame {
             });
             atual = atual.getProximo();
         }
+    }
+
+    private void limparCampo() {
+        txtNomeMateria.setText("");
     }
 
     /**
@@ -183,10 +183,6 @@ public class telaMateria extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public static int generateID() {
-        counter++;
-        return counter;
-    }
 
     private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
         Materia materia = new Materia();
@@ -201,7 +197,7 @@ public class telaMateria extends javax.swing.JFrame {
         lista.exibirLista();
         quick.quicksortPorNome(lista);
         carregarTabela();
-        txtNomeMateria.setText("");
+        limparCampo();
     }//GEN-LAST:event_btnInserirActionPerformed
 
     private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
@@ -209,7 +205,7 @@ public class telaMateria extends javax.swing.JFrame {
         if (row != -1) {
             txtNomeMateria.setText(table.getValueAt(table.getSelectedRow(), 0).toString());
         } else {
-            txtNomeMateria.setText("");
+            limparCampo();
         }
     }//GEN-LAST:event_tableMouseClicked
 
@@ -218,28 +214,23 @@ public class telaMateria extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNomeMateriaActionPerformed
 
     private void tableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseReleased
-        /*int row = table.getSelectedRow();
-        Materia materia = new Materia();
-
-        String aluno = (String) table.getValueAt(row, 1);
-        Aluno al = listaAluno.buscarNome(aluno);
+        int row = table.getSelectedRow();
 
         if (row != -1) {
-            txtNomeMateria.setText(table.getValueAt(table.getSelectedRow(), 0).toString());
-            cb.setSelectedItem(al.getMatricula());
-            txtNota.setText(table.getValueAt(table.getSelectedRow(), 2).toString());
+            txtNomeMateria.setText(table.getValueAt(row, 0).toString());
         } else {
-            txtNomeMateria.setText("");
-        }*/
+            limparCampo();
+        }
     }//GEN-LAST:event_tableMouseReleased
 
     private void btnDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelActionPerformed
-        int row = table.getSelectedRow();  
+        int row = table.getSelectedRow();
         lista.retirarMeio(row);
         carregarTabela();
         lista.exibirLista();
-        txtNomeMateria.setText("");
+        limparCampo();
     }//GEN-LAST:event_btnDelActionPerformed
+
 
     private void btnAtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtActionPerformed
         int row = table.getSelectedRow();
@@ -247,11 +238,16 @@ public class telaMateria extends javax.swing.JFrame {
         lista.buscar(nome).setMateria(txtNomeMateria.getText());
         carregarTabela();
         lista.exibirLista();
+        limparCampo();
+
     }//GEN-LAST:event_btnAtActionPerformed
 
     private void btnIOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIOrdenarActionPerformed
-        quick.sort(lista);
-        carregarTabela();
+
+            quick.sort(lista);
+            carregarTabela();
+            limparCampo();
+        
     }//GEN-LAST:event_btnIOrdenarActionPerformed
 
     /**

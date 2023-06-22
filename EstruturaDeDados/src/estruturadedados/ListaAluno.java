@@ -1,6 +1,5 @@
 package estruturadedados;
 
-import java.util.List;
 import model.Aluno;
 
 public class ListaAluno {

@@ -23,12 +23,12 @@ public class QuickSort {
             return;
         }
         try {
-            No pivô = ultimo;
+            No atual = ultimo;
             No i = primeiro;
             No j = primeiro;
 
             while (j != ultimo) {
-                if (j.getAluno().getNome().compareTo(pivô.getAluno().getNome()) < 0) {
+                if (j.getAluno().getNome().compareTo(atual.getAluno().getNome()) < 0) {
                     Aluno temp = i.getAluno();
                     i.setAluno(j.getAluno());
                     j.setAluno(temp);

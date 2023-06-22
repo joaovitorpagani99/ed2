@@ -1,5 +1,7 @@
 package model;
 
+import javax.swing.JOptionPane;
+
 public class Aluno {
 
     private String nome;
@@ -33,7 +35,11 @@ public class Aluno {
     }
 
     public void setIdade(int idade) {
-        this.idade = idade;
+        if (idade <= 100 && idade >= 0) {
+            this.idade = idade;
+        }else{
+            JOptionPane.showMessageDialog(null, "Idade Incorreta");
+        }
     }
 
     public String getMatricula() {
@@ -57,7 +63,12 @@ public class Aluno {
     }
 
     public void setNota(Double nota) {
-        this.nota = nota;
+        if (nota <= 10.0 && nota >= 0.0) {
+            this.nota = nota;
+        }else{
+            JOptionPane.showMessageDialog(null, "nota Incorreta");
+        }
+        
     }
 
     @Override

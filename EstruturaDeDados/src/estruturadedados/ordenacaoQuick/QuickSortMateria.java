@@ -6,6 +6,7 @@ package estruturadedados.ordenacaoQuick;
 
 import estruturadedados.ListaMateria;
 import estruturadedados.NoMateria;
+import javax.swing.JOptionPane;
 import model.Materia;
 
 /**
@@ -23,12 +24,12 @@ public class QuickSortMateria {
             return;
         }
         try {
-            NoMateria pivô = ultimo;
+            NoMateria atual = ultimo;
             NoMateria i = primeiro;
             NoMateria j = primeiro;
 
             while (j != ultimo) {
-                if (j.getMateria().getMateria().compareTo(pivô.getMateria().getMateria()) < 0) {
+                if (j.getMateria().getMateria().compareTo(atual.getMateria().getMateria()) < 0) {
                     Materia temp = i.getMateria();
                     i.setMateria(j.getMateria());
                     j.setMateria(temp);
@@ -56,27 +57,31 @@ public class QuickSortMateria {
     }
 
     private static void quickSort(ListaMateria lista, NoMateria inicio, NoMateria fim) {
-        if (inicio != fim && inicio != null && fim != null) {
-            NoMateria pivo = particionar(lista, inicio, fim);
-            quickSort(lista, inicio, pivo.getAnterior());
-            quickSort(lista, pivo.getProximo(), fim);
-        }
+
+            if (inicio != fim && inicio != null && fim != null) {
+                NoMateria Atual = particionar(lista, inicio, fim);
+                quickSort(lista, inicio, Atual.getAnterior());
+                quickSort(lista, Atual.getProximo(), fim);
+            }
+        
+
     }
 
     private static NoMateria particionar(ListaMateria lista, NoMateria inicio, NoMateria fim) {
         int pivot = fim.getMateria().getnAluno();
         NoMateria i = inicio.getAnterior();
-
-        for (NoMateria j = inicio; j != fim; j = j.getProximo()) {
-            if (j.getMateria().getnAluno()<= pivot) {
-                i = (i == null) ? inicio : i.getProximo();
-                swap(lista, i, j);
+        try {
+            for (NoMateria j = inicio; j != fim; j = j.getProximo()) {
+                if (j.getMateria().getnAluno() <= pivot) {
+                    i = (i == null) ? inicio : i.getProximo();
+                    swap(lista, i, j);
+                }
             }
+            i = (i == null) ? inicio : i.getProximo();
+            swap(lista, i, fim);
+        } catch (NullPointerException e) {
+      
         }
-
-        i = (i == null) ? inicio : i.getProximo();
-        swap(lista, i, fim);
-
         return i;
     }
 
